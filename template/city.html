@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>City Form</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h2>City</h2>
+    <form action="{% url 'city' %}" method="post">
+        {% csrf_token %}
+        <label for="country">Country:</label>
+        <select id="country" name="country">
+            <option value="">Select a country</option>
+            {% for country in countries %}
+                <option value="{{ country.id }}">{{ country.name }}</option>
+            {% endfor %}
+        </select> <br>
+
+        <label for="state">State:</label>
+        <select id="state" name="state">
+            <option value="">Select a state</option>
+        </select> <br> <br>
+
+        <label for="">City Name</label>
+        <input type="text" name="cityname" id="" > <br><br>
+
+        <label for="">Slug</label>
+        <input type="text" name="cityslug" id=""><br><br>
+
+        <!-- Add other fields as needed -->
+        <button type="submit">Submit</button> <br>
+    </form> <br>
+    <a href="{% url 'state' %}"><button> Go to State</button></a> <br> <br>
+	<a href="{% url 'country' %}"><button> Go to Country</button></a> <br> <br>
+	
+
+    <br>
+    <br>
+    <table border="1px">
+        <tr>
+            <th>Country</th>
+            <th>State</th>
+            <th>City Name</th>
+            <th>Slug</th>
+            <th>Action</th>
+        </tr>
+        {% for item in cityobj %}
+        <tr>
+            <td>{{ item.country }}</td>
+            <td>{{ item.state }}</td>
+            <td>{{ item.cityname }}</td>
+            <td>{{ item.slug }}</td>
+            <td>
+                <a href="{% url 'updatecity' item.id %}"><button>Edit</button></a>
+                <a href="{% url 'deletecity' item.id %}"><button>Delete</button></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#country').change(function() {
+                var countryId = $(this).val();  // Get the selected country ID
+                if (countryId) {
+                    $.ajax({
+                        url: '{% url "ajax_load_states" %}',
+                        data: {
+                            'country_id': countryId
+                        },
+                        success: function(data) {
+                            console.log('Data received:', data);  // Log the received data
+                            $('#state').empty();
+                            $('#state').append('<option value="">Select a state</option>');
+                            $.each(data, function(key, value) {
+                                $('#state').append('<option value="' + value.id + '">' + value.statename + '</option>');
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('AJAX Error: ', status, error);  // Log AJAX errors
+                        }
+                    });
+                } else {
+                    $('#state').empty();
+                    $('#state').append('<option value="">Select a state</option>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

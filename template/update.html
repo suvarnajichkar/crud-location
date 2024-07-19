@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<form action="{% url 'update' countryobj.id %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+
+		<label for="">Country Name</label> <br>
+		<input type="text" name="country_name" value="{{countryobj.name}}" id=""> <br> <br>
+
+		<label for="">Code</label> <br>
+		<input type="text" name="code" value="{{countryobj.code}}"> <br> <br>
+		
+		<label for="">Slug</label> <br>
+		<input type="text" name="slug" value="{{countryobj.slug}}" id=""> <br> <br>
+
+		
+		<label for="">Flag</label> <br><br>
+		<input type="file" name="flag"  id=""><br>
+		<img src="{{countryobj.flag.url}}" alt="flag" width="50px">
+		<br>
+		
+	
+		<label for="">state available</label>
+		{% if countryobj.is_state_available %}
+		<input type="checkbox" name="state_available" value="1" id="" checked> 
+		{% else %}
+		<input type="checkbox" name="state_available" value="1" id=""> 
+		{% endif %}
+		<br>
+
+		<button type="submit">update</button>
+	</form> <br>

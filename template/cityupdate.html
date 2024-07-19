@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>City Form</title>
+</head>
+<body>
+    <h2>City</h2>
+    <form action="{% url 'updatecity' cityobj.id %}" method="post">
+        {% csrf_token %}
+        <label for="">City Name</label>
+        <input type="text" name="cityname" value="{{ cityobj.cityname }}" id=""> <br><br>
+
+        <label for="">Slug</label>
+        <input type="text" name="cityslug" value="{{ cityobj.slug }}" id=""><br><br>
+
+        <!-- Add other fields as needed -->
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

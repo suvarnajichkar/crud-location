@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<h2>Country</h2>
+	<form action="{% url 'country' %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+
+		<label for="">Country Name</label> <br>
+		<input type="text" name="country_name" id=""> <br>
+
+		<label for="">Code</label> <br>
+		<input type="text" name="code" id=""> <br>
+		
+		<label for="">Slug</label> <br>
+		<input type="text" name="slug" id=""> <br>
+
+		<label for="">Flag</label> <br>
+		<input type="file" name="flag" id=""> <br>
+
+		<label for="">state available</label>
+		<input type="checkbox" name="state_available" value="1" id=""> <br>
+
+		<button type="submit">save</button> <br>
+	</form> <br>
+	<a href="{% url 'state' %}"><button> Go to State</button></a> <br> <br>
+	<a href="{% url 'city' %}"><button> Go to City</button></a> <br> <br>
+	
+
+
+	<table border="1px">
+		<tr>
+			<th>Country name</th>
+			<th>Slug</th>
+			<th>Code</th>
+			<th>Flag</th>
+			<th>Active</th>
+			<th>Action</th>
+		</tr>
+		{% for item in countryobj %}
+	
+		<tr>
+			<td>{{item.name}}</td>
+			<td>{{item.slug}}</td>
+			<td>{{item.code}}</td>
+			{% if item.flag %}
+			<td><img src="{{item.flag.url}}" alt="flag" width="50px"></td>
+			{% else %}
+			no Flag
+			{% endif %}
+			<td>
+				{% if is_active %}
+				<button>active</button>
+				{% else %}
+				<button>In-active</button>
+				{% endif %}
+			</td>
+			<td>
+				<a href="{% url 'update' item.id %}"><button>Edit</button></a>
+
+				<form action="{% url 'country' item.id %}" method="post">
+					{% csrf_token %}
+					<button type="submit">Delete</button>
+				</form>
+					
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h2>State</h2>
+	<form action="{% url 'state' %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<select name="country_id" id="">
+
+			{% for item in countryobj %}
+			<option value="{{item.id}}">{{item.name}}</option>
+			{% endfor %}
+		</select>
+
+		<br> <br>
+		<label for="">State Name</label> <br>
+		<input type="text" name="state" id=""> <br>
+
+		<label for="">Slug</label> <br>
+		<input type="text" name="state_slug" id=""> <br>
+		
+		<label for="">Population</label> <br>
+		<input type="text" name="population" id=""> <br>
+
+		<label for="">language</label> <br>
+		<input type="text" name="language" id=""> <br> <br>
+
+		<button type="submit">save</button>
+	</form> <br>
+	<a href="{% url 'city' %}"><button> Go to City</button></a> <br> <br>
+	<a href="{% url 'country' %}"><button> Go to Country</button></a> <br> <br>
+	
+
+	<table border="1px">
+		<tr>
+		<th>Country Name</th>
+		<th>State Name</th>
+		<th>State slug</th>
+		<th>population</th>
+		<th>langauge</th>
+		<th>Action</th>
+		</tr>
+
+		{% for item in stateobj %}
+		<tr>
+			<td>{{item.Country}}</td>
+			<td>{{item.statename}}</td>
+			<td>{{item.stateslug}}</td>
+			<td>{{item.language}}</td>
+			<td>{{item.population}}</td>
+			<td>
+				<a href="{% url 'supdate' item.id %}"><button type="button">Edit</button></a>
+				<form action="{% url 'delete' item.id %}" method="post" style="display:inline;">
+					{% csrf_token %}
+					<button type="submit">Delete</button>
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+
+	
+</body>
+</html>

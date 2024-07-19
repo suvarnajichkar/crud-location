@@ -1,0 +1,16 @@
+<!-- citydelete.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete City</title>
+</head>
+<body>
+    <h1>Are you sure you want to delete the city {{ cityobj.cityname }}?</h1>
+    <form action="{% url 'deletecity' cityobj.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+        <a href="/city/"><button type="button">Cancel</button></a>
+    </form>
+</body>
+</html>

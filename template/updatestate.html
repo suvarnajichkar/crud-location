@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update State</title>
+</head>
+<body>
+    <h2>Update State</h2>
+    <form action="{% url 'supdate' stateobj.id %}" method="post">
+        {% csrf_token %}
+        <label for="Country">Country:</label>
+    
+
+        <label for="statename">State Name:</label>
+        <input type="text" id="statename" name="statename" value="{{ stateobj.statename }}"><br><br>
+
+        <label for="stateslug">State Slug:</label>
+        <input type="text" id="stateslug" name="stateslug" value="{{ stateobj.stateslug }}"><br><br>
+
+        <label for="language">Language:</label>
+        <input type="text" id="language" name="language" value="{{ stateobj.language }}"><br><br>
+
+        <label for="population">Population:</label>
+        <input type="number" id="population" name="population" value="{{ stateobj.population }}"><br><br>
+
+        <button type="submit">Save</button>
+    </form>
+    <a href="{% url 'state' %}"><button type="button">Cancel</button></a>
+</body>
+</html>
